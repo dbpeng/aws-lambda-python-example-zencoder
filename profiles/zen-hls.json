@@ -1,0 +1,119 @@
+{
+    "output": [
+        {
+            "audio_bitrate": 64,
+            "audio_sample_rate": 44100,
+            "base_url": "#{S3_BASE_URL}",
+            "decoder_bitrate_cap": 360,
+            "decoder_buffer_size": 840,
+            "filename": "playlist-240k.m3u8",
+            "max_frame_rate": 15,
+            "public": 1,
+            "type": "segmented",
+            "video_bitrate": 184,
+            "width": 320,
+            "format": "ts"
+        },
+        {
+            "audio_bitrate": 56,
+            "audio_sample_rate": 44100,
+            "base_url": "#{S3_BASE_URL}",
+            "decoder_bitrate_cap": 578,
+            "decoder_buffer_size": 1344,
+            "filename": "playlist-440k.m3u8",
+            "public": 1,
+            "type": "segmented",
+            "video_bitrate": 384,
+            "width": 400,
+            "format": "ts"
+        },
+        {
+            "audio_bitrate": 56,
+            "audio_sample_rate": 44100,
+            "base_url": "#{S3_BASE_URL}",
+            "decoder_bitrate_cap": 960,
+            "decoder_buffer_size": 2240,
+            "filename": "playlist-640k.m3u8",
+            "public": 1,
+            "type": "segmented",
+            "video_bitrate": 584,
+            "width": 480,
+            "format": "ts"
+        },
+        {
+            "audio_bitrate": 56,
+            "audio_sample_rate": 44100,
+            "base_url": "#{S3_BASE_URL}",
+            "decoder_bitrate_cap": 1500,
+            "decoder_buffer_size": 4000,
+            "filename": "playlist-1040k.m3u8",
+            "public": 1,
+            "type": "segmented",
+            "video_bitrate": 1000,
+            "width": 640,
+            "format": "ts"
+        },
+        {
+            "audio_bitrate": 56,
+            "audio_sample_rate": 44100,
+            "base_url": "#{S3_BASE_URL}",
+            "decoder_bitrate_cap": 2310,
+            "decoder_buffer_size": 5390,
+            "filename": "playlist-1540k.m3u8",
+            "public": 1,
+            "type": "segmented",
+            "video_bitrate": 1484,
+            "width": 960,
+            "format": "ts"
+        },
+        {
+            "audio_bitrate": 56,
+            "audio_sample_rate": 44100,
+            "base_url": "#{S3_BASE_URL}",
+            "decoder_bitrate_cap": 3060,
+            "decoder_buffer_size": 7140,
+            "filename": "playlist-2040k.m3u8",
+            "public": 1,
+            "type": "segmented",
+            "video_bitrate": 1984,
+            "width": 1024,
+            "format": "ts"
+        },
+        {
+            "base_url": "#{S3_BASE_URL}",
+            "filename": "playlist.m3u8",
+            "public": 1,
+            "streams": [
+                {
+                    "bandwidth": 2040,
+                    "path": "playlist-2040k.m3u8"
+                },
+                {
+                    "bandwidth": 1540,
+                    "path": "playlist-1540k.m3u8"
+                },
+                {
+                    "bandwidth": 1040,
+                    "path": "playlist-1040k.m3u8"
+                },
+                {
+                    "bandwidth": 640,
+                    "path": "playlist-640k.m3u8"
+                },
+                {
+                    "bandwidth": 440,
+                    "path": "playlist-440k.m3u8"
+                },
+                {
+                    "bandwidth": 240,
+                    "path": "playlist-240k.m3u8"
+                },
+                {
+                    "bandwidth": 64,
+                    "path": "playlist-64k.m3u8"
+                }
+            ],
+            "type": "playlist"
+        }
+    ]
+}
