@@ -1,0 +1,74 @@
+service: videos
+frameworkVersion: ">=1.2.0 <2.0.0"
+
+plugins:
+  - serverless-prune-plugin
+  - serverless-plugin-warmup
+  - serverless-apigw-binary
+  - serverless-python-requirements
+
+custom:
+  prune:
+    automatic: true
+    number: 1
+  warmup:
+    cleanFolder: true
+    memorySize: 128
+    name: ${self:service}-${self:provider.stage}-warmupscheduler
+    schedule: rate(1 minute)
+    timeout: 30
+    prewarm: true
+  apigwBinary:
+    types:
+      - '*/*'
+  service:
+    stage: ${opt:stage, 'dev'}
+    build: ${opt:build, 'dev'}
+  pythonRequirements:
+    invalidateCaches: true
+    dockerizePip: non-linux
+    dockerImage: ${file(serverless/build-${self:custom.service.build}.yml):build.dockerImage}
+
+provider:
+  name: aws
+  runtime: python2.7
+  profile: ${file(serverless/build-${self:custom.service.stage}.yml):build.profile}
+  region: ${file(serverless/env-${self:custom.service.stage}.yml):provider.region}
+  # stage: ${file(env-${self:custom.service.env}.yaml):provider.stage}
+  # deploymentBucket: ${file(env-${self:custom.service.env}.yaml):provider.deploymentBucket}
+  # role: ${file(env-${self:custom.service.env}.yaml):provider.role}
+  # vpc: ${file(env-${self:custom.service.env}.yaml):provider.vpc}
+  memorySize: 256
+  timeout: 180
+
+functions:
+  videoApiSuccess:
+    handler: resultReceiver.awsEndpointHandler
+    events:
+      - http:
+          method: post
+          cors: true
+          path: transcoders/zencoder/{jobid}/status
+    environment:
+      VIDEOS_DB_CONNECTION: ${file(serverless/application-${self:custom.service.stage}.yml):database.connection}
+      VIDEOS_OUTPUT_PATH: ${file(serverless/application-${self:custom.service.stage}.yml):videos.outputPath}
+      VIDEOS_S3_PATH: ${file(serverless/application-${self:custom.service.stage}.yml):videos.s3Path}
+  videoTranscodeRequest:
+    handler: jobSender.awsEndpointHandler
+    events:
+      - http:
+          method: post
+          cors: true
+          path: transcoders/zencoder
+    environment:
+      ZENCODER_URL: ${file(serverless/application-${self:custom.service.stage}.yml):zencoder.apiUrl}
+      ZENCODER_KEY: ${file(serverless/application-${self:custom.service.stage}.yml):zencoder.apiKey}
+      ZENCODER_CRED: ${file(serverless/application-${self:custom.service.stage}.yml):zencoder.credential}
+      VIDEOS_URL: ${file(serverless/application-${self:custom.service.stage}.yml):videos.webhookOrigin}
+      VIDEOS_PATH: ${file(serverless/application-${self:custom.service.stage}.yml):videos.webhookPath}
+      VIDEOS_OUTPUT_PATH: ${file(serverless/application-${self:custom.service.stage}.yml):videos.outputPath}
+      VIDEOS_S3_PATH: ${file(serverless/application-${self:custom.service.stage}.yml):videos.s3Path}
+      VIDEOS_DB_CONNECTION: ${file(serverless/application-${self:custom.service.stage}.yml):database.connection}     
+package:
+  include:
+    - libmysqlclient.so.18

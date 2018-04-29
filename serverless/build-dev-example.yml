@@ -1,0 +1,3 @@
+build:
+  dockerImage: <YOUR LCOAL DOCKER IMAGE NAME>
+  profile: <YOUR SERVERLESS PROFILE TO TALK TO AWS>

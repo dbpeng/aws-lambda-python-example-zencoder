@@ -1,0 +1,11 @@
+zencoder:
+  apiUrl: https://app.zencoder.com/api/v2/jobs
+  apiKey: <YOUR ZENCODER API KEY>
+  credential: <YOUR CREDENTIAL PROFILE STORED ON ZENCODER>
+videos:
+  webhookOrigin: <YOUR API GATEWAY ENDPOINT>
+  webhookPath: /transcoders/zencoder/{jobid}/status
+  outputPath: <THE VIDEO OUTPUT PATH>
+  s3Path: <THE S3 FOLDER FOR ZENCODER TO STROE TRANSCODED VIDEO>
+database:
+  connection: mysql://<ID>:<PWD>@<DATABASE ENDPOINT>:3306/<SCHEMA>
