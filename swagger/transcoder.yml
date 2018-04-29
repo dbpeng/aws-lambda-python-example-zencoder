@@ -1,0 +1,132 @@
+swagger: '2.0'
+info:
+  title: transcoder APIs
+  description: transcoder apis that submit a job and get response from vendor system with webhook
+  version: '0.1'
+host: my.dev.transcoder.endpoint
+schemes:
+  - https
+basePath: /videos/v1
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /transcoders/zencoder:
+    post:
+      summary: create a transcoding job 
+      description: sneding the request to transcode a job and keep tracking the progress in the system
+      operationId: transcode
+      tags:
+        - transcoder
+      parameters:
+        - name: videoContext
+          in: body
+          schema:
+            $ref: '#/definitions/TranscoderRequest'
+      responses:
+        '200':
+          description: successfully update the tuple
+          schema:
+            $ref: '#/definitions/TranscoderSuccessResponse'
+        '400':
+          description: Invalid parameters
+          schema:
+            $ref: '#/definitions/TranscoderError'
+        '401':
+          description: Unauthorized operation.
+          schema:
+            $ref: '#/definitions/TranscoderError'
+        '403':
+          description: operation forbidden.
+          schema:
+            $ref: '#/definitions/TranscoderError'
+  /transcoders/zencoder/{jobId}/status:
+    post:
+      summary: get notified when transcoding job from zencoder is done
+      description: | 
+        When job is finished, zencoder will send a post message through this endpoint, 
+        for detail we can refer to 
+        https://support.brightcove.com/zencoder-getting-notifications-when-videos-are-finished
+      operatoinId: notifyJob
+      tags:
+        - transcoder
+        - zencoder
+      parameters:
+        - name: notification
+          in: body
+          schema:
+            $ref: '#/definitions/ZencoderJobNotification'
+      responses:
+        '200':
+          description: successfully update the tuple
+          schema:
+            $ref: '#/definitions/TranscoderDoneResponse'
+        '400':
+          description: Invalid parameters
+          schema:
+            $ref: '#/definitions/TranscoderError'
+        '401':
+          description: Unauthorized operation.
+          schema:
+            $ref: '#/definitions/TranscoderError'
+        '403':
+          description: operation forbidden.
+          schema:
+            $ref: '#/definitions/TranscoderError'
+definitions:
+  TranscoderSuccessResponse:
+    type: object
+    description: the success response when using the transcoder to do a video clip
+    properties:
+      code:
+        type: integer
+        description: success code
+  TranscoderRequest:
+    type: object
+    description: the transcoder request body
+    properties:
+      src:
+        type: string
+        description: |- 
+          the source uri which currently supports http and s3, please be noticed if you choose s3 you need to make sure the location is accessable from Zencoder
+      profile:
+        type: string
+        description: |-
+          the transcoding profile we will be using for the transcoding job
+      webhook:
+        type: string
+        description: the url for notifying the job is done
+  TranscoderDoneResponse:
+    type: object
+    description: the transcoder done response
+    properties:
+      code:
+        type: integer
+        description: 200 means the success
+  ZencoderJobNotification:
+    type: object
+    description: |- 
+      the post message body defined in https://support.brightcove.com/zencoder-getting-notifications-when-videos-are-finished
+      we will only take note of the necessary properties here
+    properties:
+      job:
+        type: object
+        description: this is the job object that returns what job id it is
+        properties:
+          id:
+            type: number
+            description: the zencoder job id
+          state:
+            type: string
+            description: the job execution result
+  TranscoderError:
+    type: object
+    description: the error response
+    properties:
+      code:
+        type: integer
+        description: error code
+      message:
+        type: string
+        description: error message

@@ -1,0 +1,13 @@
+{
+    u'body': u'{\n "job": {\n "id": 476841343,\n "status": "finished"\n }\n}', 
+    u'resource': u'/transcoders/zencoder/{jobid}/status', 
+    u'requestContext': {u'resourceId': u'ukyh6q', u'apiId': u'7snxwzlajh', u'resourcePath': u'/transcoders/zencoder/{jobid}/status', u'httpMethod': u'POST', u'requestId': u'test-invoke-request', u'extendedRequestId': u'test-invoke-extendedRequestId', u'path': u'/transcoders/zencoder/{jobid}/status', u'accountId': u'578188066851', u'identity': {u'apiKey': u'test-invoke-api-key', u'userArn': u'arn:aws:iam::578188066851:root', u'sourceIp': u'test-invoke-source-ip', u'accessKey': u'ASIAJTMBHOOLEUCICINA', u'caller': u'578188066851', u'userAgent': u'aws-internal/3', u'user': u'578188066851', u'cognitoIdentityPoolId': None, u'cognitoIdentityId': None, u'cognitoAuthenticationProvider': None, u'cognitoAuthenticationType': None, u'apiKeyId': u'test-invoke-api-key-id', u'accountId': u'578188066851'},
+    u'stage': u'test-invoke-stage'}, 
+    u'queryStringParameters': None, 
+    u'httpMethod': u'POST', 
+    u'pathParameters': {u'jobid': u'9'}, 
+    u'headers': None, 
+    u'stageVariables': None, 
+    u'path': u'/transcoders/zencoder/9/status', 
+    u'isBase64Encoded': False
+}
