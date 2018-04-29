@@ -1,0 +1,12 @@
+better-exceptions==0.2.1
+certifi==2018.1.18
+chardet==3.0.4
+idna==2.6
+enum34
+PyMySQL==0.8.0
+MySQL-python
+requests==2.18.4
+shortuuid==0.5.0
+SQLAlchemy==1.2.6
+urllib3==1.22
+zencoder==0.6.5
