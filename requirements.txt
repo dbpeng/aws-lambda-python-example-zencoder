@@ -8,5 +8,5 @@ MySQL-python
 requests==2.18.4
 shortuuid==0.5.0
 SQLAlchemy==1.2.6
-urllib3==1.22
+urllib3==1.26.5
 zencoder==0.6.5
